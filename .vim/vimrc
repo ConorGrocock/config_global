@@ -1,0 +1,193 @@
+set nocompatible
+
+" Enable plugin manager
+" execute pathogen#infect()
+call plug#begin()
+Plug 'vim-scripts/a.vim'
+Plug 'flazz/vim-colorschemes'
+Plug 'bubujka/emmet-vim'
+Plug 'itchyny/lightline.vim'
+Plug 'https://github.com/scrooloose/nerdtree.git'
+Plug 'moll/vim-node'
+Plug 'luochen1990/rainbow'
+Plug 'gagoar/stripwhitespaces'
+Plug 'ervandew/supertab'
+Plug 'airblade/vim-gitgutter'
+Plug 'w0rp/ale'
+Plug 'pseewald/vim-anyfold'
+Plug 'pangloss/vim-javascript'
+Plug 'elzr/vim-json'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'xuhdev/vim-latex-live-preview'
+Plug 'townk/vim-autoclose'
+Plug 'gorodinskiy/vim-coloresque'
+Plug 'myusuf3/numbers.vim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'gcmt/taboo.vim'
+Plug 'maximbaz/lightline-ale'
+Plug 'bkad/CamelCaseMotion'
+call plug#end()
+
+filetype plugin on
+
+" Theme
+filetype on
+syntax on
+colorscheme Tomorrow-Night
+set encoding=UTF-8
+set guifont=SauceCodePro\ Nerd\ Font\ Mono:h18
+" End theme
+
+" Enable line numbers
+" set number
+
+" Set leader key to space
+let mapleader=" "
+" Enable quick reloading of config file
+map <leader>s :source ~/.config_global/.vim/vimrc<CR>
+
+" Keep buffer when opening new file
+set hidden
+" Set history to last X changes
+set history=10000
+
+filetype indent on
+" set nowrap
+set tabstop=4
+set shiftwidth=4
+set list
+set listchars=tab:>-
+" set expandtab
+set smartindent
+set autoindent
+
+" Transparently
+" hi Normal ctermfg=252 ctermbg=none
+
+" Remove whitespace on save
+" autocmd BufWritePre * :%s/\s\+$//e
+
+" Highlight the selected word
+set hlsearch
+" Cancel seach with escape
+" nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<CR>
+
+" Reopen last file
+nnoremap <Leader><Leader> :e#<CR>
+
+" Make home go to start of code instead of start of line
+map <Home> ^
+
+" Show matching brackets
+set showmatch
+
+set modeline
+set modelines=5
+
+" Set line numbers
+set number relativenumber
+
+set laststatus=2
+set noshowmode
+
+" Control to move forward and back one word
+imap <silent> <S-Left> <C-o><Plug>CamelCaseMotion_b
+imap <silent> <S-Right> <C-o><Plug>CamelCaseMotion_w
+
+" Copy and paste using sys clipboard
+vmap <C-y> "+y
+vmap <C-p> "+P
+vmap <C-d> "+d
+
+let g:lightline = {
+	\	'colorscheme': 'jellybeans',
+	\ }
+
+let g:lightline.component_expand = {
+		\  'linter_checking': 'lightline#ale#checking',
+		\  'linter_warnings': 'lightline#ale#warnings',
+		\  'linter_errors': 'lightline#ale#errors',
+		\  'linter_ok': 'lightline#ale#ok',
+	\ }
+
+let g:lightline.component_type = {
+      \     'linter_checking': 'left',
+      \     'linter_warnings': 'warning',
+      \     'linter_errors': 'error',
+      \     'linter_ok': 'left',
+      \ }
+
+let g:lightline#ale#indicator_checking = "\uf110"
+let g:lightline#ale#indicator_warnings = "\uf071"
+let g:lightline#ale#indicator_errors = "\uf05e"
+let g:lightline#ale#indicator_ok = "\uf00c"
+
+let g:lightline.active = { 'left': 	[[ 'mode', 'paste' ],
+	\				  				 [ 'readonly', 'filename', 'modified'],
+	\								 ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
+
+
+" On right arrow expand folder
+let NERDTreeMapActivateNode='<right>'
+" Show hidden files in nerdtree
+let NERDTreeShowHidden=1
+" Show nerdtree with leader+n
+nmap <leader>n :NERDTreeToggle<CR>
+" Find current file with leader+j
+nmap <leader>j :NERDTreeFind<CR>
+
+" Pane resizing
+map + <c-w>+
+map - <c-w>-
+map <c-n> <c-w><
+map <c-m> <c-w>>
+
+" Ignore certian files
+let NERDTreeIgnore=['\.DS_Store', '\~$', '\.swp']
+
+" Gitgutter update time
+set updatetime=500
+
+" Code folding
+let anyfold_activate=1
+set foldlevel=0
+
+let g:numbers_exclude = ['nerdtree']
+
+" Prettifyer settings
+let g:prettier#config#use_tabs = 'true'
+
+" ALE settings
+" Change error message format
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+let g:ale_fixers = {
+\   'javascript': ['eslint', 'prettier'],
+\}
+
+let g:ale_fix_on_save = 1
+let g:ale_completion_enabled = 1
+
+
+" keybind to move between errors
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+" Store tab names in session
+set sessionoptions+=tabpages,globals
+
+" Setting files types for various files
+autocmd BufNewFile,BufRead *.shader,*.vs,*.fs 	set ft=glsl
+autocmd BufNewFile,BufRead *.ejs     			set filetype=ejs
+
+" autocmd FileType tex 			:LLPStartPreview<CR>
+autocmd FileType tex 			noremap <C-e> :LLPStartPreview<CR>
+
+autocmd Filetype nerdtree 		let anyfold_activate=0
+
+autocmd Filetype javascript		nmap <C-T> :let $VIM_DIR=expand('%:p')<CR>:terminal<CR>node $VIM_DIR<CR>
+" Testing
+"nmap <C-T> :let $VIM_DIR=expand('%:p:h')<CR>:terminal<CR>cd $VIM_DIR<CR>
+

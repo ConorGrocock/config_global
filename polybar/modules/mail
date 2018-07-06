@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+import subprocess
+reload(sys)
+sys.setdefaultencoding('utf8')
+if sys.argv[-1] == "--update":
+    os.system("offlineimap -u quiet")
+else:
+    proc = subprocess.Popen(["ls ~/.mail/grocock.conor@gmail.com/INBOX/new | wc -l"], stdout=subprocess.PIPE, shell=True)
+    (mailA, err) = proc.communicate()
+    proc = subprocess.Popen(["ls ~/.mail/conor@grocock.email/INBOX/new | wc -l"], stdout=subprocess.PIPE, shell=True)
+    (mailB, err) = proc.communicate()
+    f = int(mailA) + int(mailB)
+    print(str(f))

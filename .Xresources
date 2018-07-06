@@ -1,0 +1,57 @@
+!! Colours
+*fadeColor: #002b36
+*pointerColorBackground: #586e75
+*pointerColorForeground: #93a1a1
+
+*foreground:   #c5c8c6
+*background:   #1d1f21
+*cursorColor:  #aeafad
+*color0:       #000000
+*color1:       #912226
+*color2:       #778900
+*color3:       #ae7b00
+*color4:       #1d2594
+*color5:       #682a9b
+*color6:       #2b6651
+*color7:       #929593
+*color8:       #666666
+*color9:       #cc6666
+*color10:      #b5bd68
+*color11:      #f0c674
+*color12:      #81a2be
+*color13:      #b294bb
+*color14:      #8abeb7
+*color15:      #ecebec
+
+
+URxvt.depth: 32
+!!URxvt.transparent: true
+URxvt.background: [75]#1d1f21
+
+URxvt.geometry: 90x30
+URxvt.scrollBar: false
+
+! Disable ISO 14755 unicode input so we can use Ctrl-Shift bindings
+URxvt.iso14755:        false
+URxvt.iso14755_52:     false
+
+! Disable Ctrl-Alt-c & Ctrl-Alt-v bindings (optional)
+URxvt.keysym.C-M-c:    builtin-string:
+URxvt.keysym.C-M-v:    builtin-string:
+
+! Bind Ctrl-Shift-c & Ctrl-Shift-v to copy and paste
+! I dont know why, but I needed to use hex keysym values to get it to work
+URxvt.keysym.C-S-0x43: eval:selection_to_clipboard
+URxvt.keysym.C-S-0x56: eval:paste_clipboard
+
+URxvt*font: xft:SauceCodePro Nerd Font Mono:pixelsize=15
+! RobotoMono Nerd Font Mono
+URxvt*letterSpace: 0
+
+URxvt.perl-ext-common: default,matcher
+URxvt.url-launcher: /usr/bin/xdg-open
+
+URxvt.matcher.button: 1
+URxvt.matcher.rend.0: Uline Bold fg5
+
+
